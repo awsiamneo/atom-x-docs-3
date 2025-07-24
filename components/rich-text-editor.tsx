@@ -102,7 +102,7 @@ const IconExtension = Node.create({
           attrs: options,
         });
       },
-    };
+    } as any;
   },
 });
 
