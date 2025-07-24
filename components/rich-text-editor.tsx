@@ -96,13 +96,13 @@ const IconExtension = Node.create({
   
   addCommands() {
     return {
-      insertIcon: (options) => ({ commands }) => {
+      insertIcon: (options: { iconName: string; iconColor?: string | null; iconSize?: string | null }) => ({ commands }: { commands: any }) => {
         return commands.insertContent({
           type: this.name,
           attrs: options,
         });
       },
-    } as any;
+    };
   },
 });
 
