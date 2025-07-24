@@ -48,6 +48,12 @@ import {
   Search,
 } from 'lucide-react';
 
+interface IconOptions {
+  iconName: string;
+  iconColor?: string | null;
+  iconSize?: string | null;
+}
+
 // Custom Icon extension for TipTap
 const IconExtension = Node.create({
   name: 'customIcon',
@@ -80,7 +86,7 @@ const IconExtension = Node.create({
     ];
   },
   
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, any> }) {
     return [
       'span',
       {
@@ -96,7 +102,7 @@ const IconExtension = Node.create({
   
   addCommands() {
     return {
-      insertIcon: (options: { iconName: string; iconColor?: string | null; iconSize?: string | null }) => ({ commands }: { commands: any }) => {
+      insertIcon: (options: IconOptions) => ({ commands }: { commands: any }) => {
         return commands.insertContent({
           type: this.name,
           attrs: options,
@@ -335,7 +341,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   };
 
   const insertIcon = (iconName: string) => {
-    editor.chain().focus().insertIcon({
+    (editor.chain().focus() as any).insertIcon({
       iconName,
       iconColor: selectedIconColor || 'currentColor',
       iconSize: '16',
@@ -353,7 +359,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   };
 
   const updateTableSize = () => {
-    const table = editor.view.dom.querySelector('table');
+    const table = editor.view.dom.querySelector('table') as HTMLTableElement;
     if (table) {
       table.style.width = `${tableWidth[0]}%`;
       table.style.height = `${tableHeight[0]}px`;
